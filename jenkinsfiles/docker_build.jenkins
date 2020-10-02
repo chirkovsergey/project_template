@@ -8,7 +8,7 @@ pipeline {
         }
     
     options {
-        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
         timestamps()
     }
     stages {
@@ -16,7 +16,7 @@ pipeline {
             steps {
                 echo " ============== start building image =================="
                 dir ("docker/${servises}") {
-                	sh "docker build -t ${servises}:latest . "
+                    sh "docker build -t ${servises}:${TAG} . "
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
         stage("docker run images") {
             steps {
                 echo " ============== start building image =================="
-                    sh "docker run -d ${servises} "
+                sh "docker run -d ${servises}:${TAG} "
      }
 }
     }
