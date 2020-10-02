@@ -26,8 +26,8 @@ pipeline {
                 echo " ============== start building image =================="
                 sh "docker rm -f ${servises} "
                 sh "docker run -d --name ${servises} ${servises}:${TAG} "
-                sh "docker rm ${servises} "
-     }
-}
+                
+            }
+         }
     }
 }
