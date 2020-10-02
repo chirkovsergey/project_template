@@ -20,5 +20,12 @@ pipeline {
                 }
             }
         }
+     
+        stage("docker run images") {
+            steps {
+                echo " ============== start building image =================="
+                    sh "docker run -d ${servises} "
      }
+}
+    }
 }
