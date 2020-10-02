@@ -25,8 +25,8 @@ pipeline {
             steps {
                 echo " ============== start building image =================="
                 sh "docker stop ${servises} "
-                   "docker run -d --name ${servises} ${servises}:${TAG} "
-                   "docker rm ${servises} "
+                sh "docker run -d --name ${servises} ${servises}:${TAG} "
+                sh "docker rm ${servises} "
      }
 }
     }
