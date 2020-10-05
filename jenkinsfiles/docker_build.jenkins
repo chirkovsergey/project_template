@@ -15,6 +15,7 @@ pipeline {
         stage("create docker image") {
             steps {
                 echo " ============== start building image =================="
+                sshagent(['docker_']) {
                 dir ("docker/${servises}") {
                     sh "ssh -o StrictHostKeyChecking=no root@5.53.124.242 "
                     sh "docker build -t ${servises}:${TAG} . "
