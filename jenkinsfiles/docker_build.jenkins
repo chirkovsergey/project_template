@@ -1,4 +1,5 @@
 #!groovy
+// Run docker build
 properties([disableConcurrentBuilds()])
 
 pipeline {
@@ -14,17 +15,32 @@ pipeline {
         stage("create docker image") {
             steps {
                 echo " ============== start building image =================="
+                dir ("docker/${servises}") {
+                    sh "docker build -t ${servises}:${TAG} . "
+                }
+            }
+        }
+     
+        stage("docker run images") {
+            steps {
+                echo " ============== start building image =================="
+                sh  "docker rm -f ${servises} "
+                sh  "docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG} "
+              }
+         }
+    
+        stage('Deploy') {
+            steps {
                 sshagent(['docker_']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no root@5.53.124.242 '''
-                    cd  ~/ && git clone https://github.com/chirkovsergey/project_template.git \
-                    cd ~/project_template/docker \
-                    docker build  ${servises} . 
-                     '''
+                        ssh -o StrictHostKeyChecking=no root@5.53.124.242 '''
+                        ifconfig
+                        docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG}
+                       '''
                         """
                 }
             }
         }
-        }
     }
-
+    
+}
