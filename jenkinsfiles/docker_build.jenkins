@@ -18,7 +18,7 @@ pipeline {
                 sshagent(['docker_']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no root@5.53.124.242 '''
-                        dir docker/${servises} {
+                        dir docker/${servises} 
                         docker build -t ${servises}:${TAG} . 
                         '''
                         """
