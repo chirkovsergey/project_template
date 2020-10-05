@@ -24,11 +24,9 @@ pipeline {
         stage("docker run images") {
             steps {
                 echo " ============== start building image =================="
-                sh '''
-#                    "docker rm -f ${servises} "
-                    "docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG} "
-                '''
-            }
+                sh  "docker rm -f ${servises} "
+                sh  "docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG} "
+              }
          }
     }
 }
