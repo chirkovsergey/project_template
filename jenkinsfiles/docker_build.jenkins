@@ -20,7 +20,7 @@ pipeline {
                     ssh -o StrictHostKeyChecking=no root@5.53.124.242 '''
                     cd  ~/ && git clone https://github.com/chirkovsergey/project_template.git \
                     cd ~/project_template/docker \
-                    docker build  ${servises}:${TAG} . 
+                    docker build  ${servises} . 
                      '''
                         """
                 }
