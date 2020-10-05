@@ -24,7 +24,7 @@ pipeline {
         stage("docker run images") {
             steps {
                 echo " ============== start building image =================="
-                withEnv(['DOCKER_HOST=tcp://80.249.146.83:2375'])
+                withEnv(['DOCKER_HOST=tcp://80.249.146.83:4243'])
                 echo "rrrrrrr testrrrrrrr"
                 sh  "docker rm -f ${servises} "
                 sh  "docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG} "
