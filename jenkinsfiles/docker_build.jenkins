@@ -17,11 +17,13 @@ pipeline {
                 echo " ============== start building image =================="
                 sshagent(['docker_']) {
                     sh "ssh -o StrictHostKeyChecking=no root@5.53.124.242 "
-                dir ("docker/${servises}") {
+                    sh "cd /opt/"
+                    sh "git clone https://github.com/chirkovsergey/project_template.git"
+                    sh "cd /opt/project_template/docker"
                     sh "docker build -t ${servises}:${TAG} . "
                 }
             }
         }
         }
     }
-}
+
