@@ -36,7 +36,7 @@ pipeline {
                     sh """
                         ssh -o StrictHostKeyChecking=no root@80.249.146.83 '''
                         ifconfig
-                        docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG}
+                        docker run -d --name ${servises}/${servises} -p ${PORT} ${servises}:${TAG}
                        '''
                         """
                 }
