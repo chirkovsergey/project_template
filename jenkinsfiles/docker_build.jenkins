@@ -24,6 +24,8 @@ pipeline {
         stage("docker run images") {
             steps {
                 echo " ============== start building image =================="
+                withEnv(['DOCKER_HOST=tcp://80.249.146.83:2375'])
+                echo "rrrrrrr testrrrrrrr"
                 sh  "docker rm -f ${servises} "
                 sh  "docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG} "
               }
@@ -33,7 +35,7 @@ pipeline {
             steps {
                 sshagent(['docker_']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no root@5.53.124.242 '''
+                        ssh -o StrictHostKeyChecking=no root@80.249.146.83 '''
                         ifconfig
                         docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG}
                        '''
