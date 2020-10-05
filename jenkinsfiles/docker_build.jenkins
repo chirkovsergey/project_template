@@ -16,7 +16,7 @@ pipeline {
             steps {
                 echo " ============== start building image =================="
                 sshagent(['docker_']) {
-                    sh "ssh -o StrictHostKeyChecking=no root@5.53.124.242 && cd /opt/ && git clone https://github.com/chirkovsergey/project_template.git && cd /opt/project_template/docker"
+                    sh "ssh -o StrictHostKeyChecking=no root@5.53.124.242 && cd ~/ && git clone https://github.com/chirkovsergey/project_template.git && cd ~/project_template/docker"
                                        
                     sh "docker build -t ${servises}:${TAG} . "
                 }
