@@ -15,26 +15,25 @@ pipeline {
         stage("create docker image") {
             steps {
                 echo " ============== start building image =================="
-                dir ("docker/${servises}") {
-                    sh "docker build -t ${servises}:${TAG} . "
+                sshagent(['docker_']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no root@5.53.124.242 '''
+                        dir ("docker/${servises}") {
+                        docker build -t ${servises}:${TAG} . 
+                        '''
+                        """
                 }
             }
         }
      
-        stage("docker run images") {
-            steps {
-                echo " ============== start building image =================="
-                sh  "docker rm -f ${servises} "
-                sh  "docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG} "
-              }
-         }
-    
         stage('Deploy') {
+            echo "====================== Deploy image =========================="
             steps {
                 sshagent(['docker_']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no root@5.53.124.242 '''
                         ifconfig
+                        docker rm -f ${servises} 
                         docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG}
                        '''
                         """
