@@ -28,5 +28,18 @@ pipeline {
                 sh  "docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG} "
               }
          }
+    
+        stage('Deploy') {
+            steps {
+                sshagent(['<docker_>']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no <user>@<localhost> '''
+                        ifconfig
+                       '''
+                        """
+                }
+            }
+        }
     }
+    
 }
