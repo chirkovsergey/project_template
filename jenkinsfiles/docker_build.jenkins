@@ -27,8 +27,8 @@ pipeline {
         }
      
         stage('Deploy') {
-            echo "====================== Deploy image =========================="
             steps {
+                echo "====================== Deploy image =========================="
                 sshagent(['docker_']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no root@5.53.124.242 '''
