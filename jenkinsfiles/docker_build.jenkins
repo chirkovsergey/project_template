@@ -31,9 +31,9 @@ pipeline {
     
         stage('Deploy') {
             steps {
-                sshagent(['<docker_>']) {
+                sshagent(['docker_']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no <user>@<localhost> '''
+                        ssh -o StrictHostKeyChecking=no root@localhost '''
                         ifconfig
                        '''
                         """
