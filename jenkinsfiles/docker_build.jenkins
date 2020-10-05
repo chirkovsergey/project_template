@@ -26,20 +26,6 @@ pipeline {
             }
         }
      
-        stage('Deploy') {
-            steps {
-                echo "====================== Deploy image =========================="
-                sshagent(['docker_']) {
-                    sh """
-                        ssh -o StrictHostKeyChecking=no root@5.53.124.242 '''
-                        ifconfig
-                        docker rm -f ${servises} 
-                        docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG}
-                       '''
-                        """
                 }
             }
-        }
-    }
-    
-}
+        
