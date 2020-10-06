@@ -18,7 +18,7 @@ pipeline {
                     sh """
                         ssh -o StrictHostKeyChecking=no root@5.53.124.165 '''
                         ifconfig && \
-                        git clone https://github.com/chirkovsergey/project_template.git ~/ 
+                        git clone https://github.com/chirkovsergey/project_template.git /opt/
                        '''
                         """
                 }
