@@ -18,7 +18,9 @@ pipeline {
                     sh """
                         ssh -o StrictHostKeyChecking=no root@5.53.124.165 '''
                         ifconfig && \
-                        git clone https://github.com/chirkovsergey/project_template.git /opt/${servises}
+                        git clone https://github.com/chirkovsergey/project_template.git /opt/${servises} && \
+                        cd /opt/${servises}/docker/${servises} && \
+                        docker build -t ${servises}:${TAG} .
                        '''
                         """
                 }
