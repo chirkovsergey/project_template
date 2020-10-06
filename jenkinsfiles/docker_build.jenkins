@@ -11,17 +11,36 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
         timestamps()
     }
-        stage('create docker image') {
+    stages {
+        stage("create docker image") {
+            steps {
+                echo " ============== start building image =================="
+                dir ("docker/${servises}") {
+                    sh "docker build -t ${servises}:${TAG} . "
+                }
+            }
+        }
+     
+        stage("docker run images") {
+            steps {
+                echo " ============== start building image =================="
+                sh  "docker rm -f ${servises} "
+                sh  "docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG} "
+              }
+         }
+    
+        stage('Deploy') {
             steps {
                 sshagent(['docker_']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no root@5.53.124.165 '''
-                        ifconfig && \
-                        sh "docker build -t ${servises}:${TAG} .
+                        ssh -o StrictHostKeyChecking=no root@5.53.124.242 '''
+                        ifconfig
+                        docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG}
                        '''
                         """
                 }
             }
         }
-     
     }
+    
+}
