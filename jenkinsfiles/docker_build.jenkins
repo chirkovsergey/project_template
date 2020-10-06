@@ -33,7 +33,7 @@ pipeline {
             steps {
                 sshagent(['docker_']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no root@5.53.124.242 '''
+                        ssh -o StrictHostKeyChecking=no root@5.53.124.165 '''
                         ifconfig
                         docker run -d --name ${servises} -p ${PORT} ${servises}:${TAG}
                        '''
