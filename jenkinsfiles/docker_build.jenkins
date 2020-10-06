@@ -12,11 +12,15 @@ pipeline {
         timestamps()
     }
     stages {
-        stage("create docker image") {
+        stage('create docker image') {
             steps {
-                echo " ============== start building image =================="
-                dir ("docker/${servises}") {
-                    sh "docker build -t ${servises}:${TAG} . "
+                sshagent(['docker_']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no root@5.53.124.165 '''
+                        ifconfig && \
+                        sh "docker build -t ${servises}:${TAG} .
+                       '''
+                        """
                 }
             }
         }
