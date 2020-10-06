@@ -24,25 +24,4 @@ pipeline {
             }
         }
      
-        stage("docker run images") {
-            steps {
-                echo " ============== start building image =================="
-                 sh  "docker rm -f ${services} "
-                 sh  "docker run -d --name ${services} -p ${PORT} ${services}:${TAG} "
-              }
-         }
-    
-        stage('Deploy') {
-            steps {
-                sshagent(['docker_']) {
-                    sh """
-                        ssh -o StrictHostKeyChecking=no root@80.249.146.83 '''
-                        ifconfig
-                        docker run -d --name ${services}/${services} -p ${PORT} ${services}:${TAG}
-                       '''
-                        """
-                }
-            }
-        }
     }
-    
